@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Add the following lines to link 'Roboto' and 'Oswald' fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;700&display=swap">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ElectroGadgets Store</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <!-- Bootstrap JavaScript (optional, for certain components) -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="styles.css">
+    <script src="script.js"></script>
+    <style>
+        /* Your existing styles go here */
+    
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .cart-container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            border: 1px solid #ddd;
+        }
+
+        #cart {
+            margin-top: 20px;
+        }
+
+        #cart-items {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        #checkout-counter {
+            display: none;
+            font-size: 24px;
+            margin-top: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+        /* Additional styles for the search bar */
+        .search-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        #searchInput {
+            margin-right: 10px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #searchButton {
+            padding: 8px 15px;
+            background-color: #3498db;
+            color: #ecf0f1;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        
+
+        /* Styles for the cart */
+        
+        #reviews {
+            margin-top: 20px; /* Keep the top margin */
+            margin-bottom: 50px; /* Adjust the bottom margin to create space above the footer */
+        }
+
+
+        #user-reviews {
+            margin-top: 10px;
+        }
+
+        #add-review textarea {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        #add-review button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #007bff;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+
+        .product-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            margin-top: 20px;
+            max-width: 900px; /* Adjust the max-width as needed */
+            margin: 0 auto; /* Center the products */
+        }
+
+        .product {
+            flex: 0 1 calc(30% - 20px); /* Adjust the width and margin as needed */
+            border: 1px solid #e1e1e1;
+            border-radius: 8px;
+            margin: 10px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            transition: transform 0.2s ease-in-out;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+
+        
+
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        
+
+        .product h3 {
+            font-size: 1.2rem;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .product p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        .product span {
+            font-weight: bold;
+            color: #28a745;
+            display: block;
+            margin-top: 8px;
+        }
+
+        .buy-button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .order-summary h2 {
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .order-summary ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .order-summary li {
+            margin-bottom: 8px;
+        }
+
+        
+    </style>
+
+    </style>
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">ElectroGadgets</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#Home">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#product">Products</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#cart">Cart</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#checkout">Checkout</a>
+                    
+           
+                </li>
+                <div class="search-container">
+                    <input type="text" id="searchInput" placeholder="Search...">
+                    <button id="searchButton" onclick="performSearch()">Search</button>
+                </div>
+            
+                <!-- Display area for search results -->
+                <div id="searchResults" class="product-container"></div>
+                
+
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="product-container"
+         class="product-grid" id="productGrid">
+        <div class="row">
+            <!-- Featured Gadgets -->
+            <div class="col-md-12">
+                <header id="Home">
+                    <h1>Welcome to ElectroGadgets Store</h1>
+                    <img src="Gadgets.jpg" alt="Product Thumbnail" id="thumbnail">
+                </header>
+
+                <section id="product">
+                    <h2>Featured Gadgets</h2>
+                    <div class="row" id="featured-gadgets"></div>
+                    <div class="product" onclick="addToCart('Laptop', 799.99)" id="1">
+                        <img src="laptop.jpeg" alt="Laptop">
+                        <h3>Laptop</h3>
+                        <p>$799.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Laptop" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Laptop')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Laptop">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Laptop')">View Ratings</button>
+                            
+                            <button class="buy-button" onclick="addToCart('Laptop', 799.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    
+                    <div class="product" onclick="addToCart('Camera', 599.99)" id="2">
+                        <img src="camera.jpeg" alt="Camera">
+                        <h3>Camera</h3>
+                        <p>$599.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Camera" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Camera')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Camera">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Camera')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Camera', 599.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Earphones', 199.99)" id="3">
+                        <img src="earphones.jpeg" alt="Earphones">
+                        <h3>Earphones</h3>
+                        <p>$199.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Earphones" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Earphones')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Earphones">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Earphones')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Earphones', 199.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Kindle', 99.99)" id="4">
+                        <img src="kindle.jpeg" alt="Kindle">
+                        <h3>Kindle</h3>
+                        <p>$99.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Kindle" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Kindle')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Kindle">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Kindle')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Kindle', 99.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Loudspeakers', 499.99)" id="5">
+                        <img src="loudspeakers.jpeg" alt="Loudspeakers">
+                        <h3>Loudspeakers</h3>
+                        <p>$499.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Loudspeakers" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Loudspeakers')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Loudspeakers">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Loudspeakers')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Loudspeakers', 499.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Router', 399.99)" id="6">
+                        <img src="router.jpeg" alt="Router">
+                        <h3>Router</h3>
+                        <p>$399.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Router" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Router')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Router">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Router')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Router', 399.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Smartphone', 199.99)" id="7">
+                        <img src="smartphone.jpeg" alt="Smartphone">
+                        <h3>Smartphone</h3>
+                        <p>$199.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Smartphone" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Smartphone')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Smartphone">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Smartphone')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Smartphone', 199.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Smartwatch', 149.99)" id="8">
+                        <img src="smartwatch.jpeg" alt="Smartwatch">
+                        <h3>Smartwatch</h3>
+                        <p>$149.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Smartwatch" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Smartwatch')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Smartwatch">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Smartwatch')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Smartwatch', 149.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('Tablet', 349.99)" id="9">
+                        <img src="tablet.jpeg" alt="Tablet">
+                        <h3>Tablet</h3>
+                        <p>$349.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-Tablet" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('Tablet')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-Tablet">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('Tablet')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('Tablet', 349.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <div class="product" onclick="addToCart('USBdrive', 49.99)" id="10">
+                        <img src="usbdrive.jpeg" alt="USBdrive">
+                        <h3>USBdrive</h3>
+                        <p>$49.99</p>
+                        <div class="product-ratings">
+                            <label for="rating">Rate this product:</label>
+                            <select id="rating-USBdrive" name="rating">
+                                <option value="5">5 stars</option>
+                                <option value="4">4 stars</option>
+                                <option value="3">3 stars</option>
+                                <option value="2">2 stars</option>
+                                <option value="1">1 star</option>
+                            </select>
+                            <button onclick="submitRating('USBdrive')">Submit Rating</button>
+                            <p class="average-rating" aria-live="polite">Average Rating: <span
+                                    id="average-rating-USBdrive">0.0</span></p>
+                            <button class="view-ratings-btn" onclick="viewRatings('USBdrive')">View Ratings</button>
+                            <button class="buy-button" onclick="addToCart('USBdrive', 49.00)">Buy Now</button>
+                        </div>
+                    </div>
+                    <!-- Add ratings, reviews, and other details here -->
+                    <!-- Repeat the structure for other products -->
+                    
+                </section>
+
+            </div>
+
+         <!-- Shopping Cart -->
+            <div class="col-md-12">
+                <section id="cart">
+                    <h2>Shopping Cart</h2>
+                    <ul id="cart-items">
+                         Cart items will be dynamically added here 
+                    </ul>
+                    <p>Total: $<span id="total">0.00</span></p>
+                    <button class="checkout-btn" onclick="checkout()">Checkout</button>
+                </section>
+            </div>
+        </div>
+    </div>
+    
+    <div class="checkout-container">
+        <section id="checkout">
+        <h1>Checkout</h1>
+
+        <div class="order-summary">
+            <!-- Display the user's selected products and their quantities here -->
+        </div>
+
+        <div class="payment-details">
+            <h2>Payment Details</h2>
+
+            <form id="checkout-form">
+                <label for="card-number">Card Number:</label>
+                <input type="text" id="card-number" name="card-number" required>
+
+                <label for="expiry-date">Expiry Date:</label>
+                <input type="text" id="expiry-date" name="expiry-date" placeholder="MM/YYYY" required>
+
+                <label for="cvv">CVV:</label>
+                <input type="text" id="cvv" name="cvv" required>
+
+                <button type="button" onclick="processPayment()">Complete Purchase</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    
+
+    <!-- Reviews -->
+    <div id="reviews">
+        <h2>Customer Reviews</h2>
+
+        <!-- Display user reviews -->
+        <div id="user-reviews"></div>
+
+        <!-- Add review form -->
+        <div id="add-review">
+            <h3>Add Your Review</h3>
+            <textarea id="reviewText" placeholder="Write your review..."></textarea>
+            <button onclick="addReview()">Submit Review</button>
+        </div>
+    </div>
+
+
+    <script src="script.js"></script>
+    <script>
+        let ratings = {};
+
+        function updateAverageRating(productId) {
+            const averageRatingElement = document.getElementById(`average-rating-${productId}`);
+            const productRatings = ratings[productId] || [];
+            const totalRating = productRatings.reduce((sum, rating) => sum + rating, 0);
+            const averageRating = totalRating / productRatings.length || 0;
+            averageRatingElement.textContent = averageRating.toFixed(1);
+        }
+
+        function submitRating(productId) {
+            // Get the selected rating value
+            const selectedRating = parseInt(document.getElementById(`rating-${productId}`).value);
+
+            // Add the rating to the array
+            if (!ratings[productId]) {
+                ratings[productId] = [];
+            }
+            ratings[productId].push(selectedRating);
+
+            // Update the average rating display
+            updateAverageRating(productId);
+
+            // Add logic to send the rating to the server or store it locally
+            // For simplicity, we'll just log the rating to the console
+            console.log(`Rating submitted for ${productId}: ${selectedRating}`);
+        }
+
+        function submitReview() {
+            // Get the review text
+            const reviewText = document.getElementById('review-text').value;
+
+            // Add logic to send the review to the server or store it locally
+            // For simplicity, we'll just log the review to the console
+            console.log(`Review submitted: ${reviewText}`);
+
+            // Append the new review to the user-reviews section
+            const userReviews = document.getElementById('user-reviews');
+            const newReviewElement = document.createElement('div');
+            newReviewElement.innerHTML = `<p>${reviewText}</p>`;
+            userReviews.appendChild(newReviewElement);
+        }
+    </script>
+
+    <!-- Your JavaScript -->
+    <!-- Add this script to handle the search functionality -->
+    <script>
+        function performSearch() {
+            // Get the search input value
+            var searchTerm = document.getElementById("searchInput").value.toLowerCase();
+
+            // Array of sample products (replace this with actual data from your server)
+            var products = [
+                { name: "Tablet", description: "$349.99", image: "tablet.jpeg" },
+                { name: "Camera", description: "$599.99", image: "camera.jpeg" },
+                { name: "Earphones", description: "$199.99", image: "earphones.jpeg" },
+                { name: "Kindle", description: "$799.99", image: "kindle.jpeg" },
+                { name: "Laptop", description: "$799.99", image: "laptop.jpeg" },
+                { name: "Loudspeakers", description: "$499.99", image: "loudspeakers.jpeg" },
+                { name: "Router", description: "$399.99", image: "router.jpeg" },
+                { name: "Smartphone", description: "$199.99", image: "smartphone.jpeg" },
+                { name: "Smartwatch", description: "$149.99", image: "smartwatch.jpeg" },
+                { name: "USBdrive", description: "$49.99", image: "usbdrive.jpeg" },
+                // Add more products as needed
+            ];
+
+            // Filter products based on the search term
+            var searchResults = products.filter(function(product) {
+                return product.name.toLowerCase().includes(searchTerm) || product.description.toLowerCase().includes(searchTerm);
+            });
+
+            // Display search results
+            var searchResultsContainer = document.getElementById("searchResults");
+            searchResultsContainer.innerHTML = ""; // Clear previous results
+
+            searchResults.forEach(function(product) {
+                var productHTML = `
+                    <div class="product">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>${product.description}</p>
+                    </div>
+                `;
+                searchResultsContainer.innerHTML += productHTML;
+            });
+        }
+    </script>
+     <!-- Include the following script in your HTML file -->
+     <script>
+        // Initialize the shopping cart as an empty array
+        var shoppingCart = [];
+    
+        // Function to add a product to the shopping cart
+        function addToCart(productName, price) {
+            // Check if the product is already in the cart
+            var isProductInCart = shoppingCart.some(item => item.name === productName);
+            console.log(`Product added to cart: ${productName} - $${price.toFixed(2)}`);
+    
+            if (isProductInCart) {
+                alert("This product is already in the cart!");
+                return;
+            }
+    
+            // Add the product to the cart
+            shoppingCart.push({ name: productName, price: price });
+    
+            // Update the cart display
+            updateCartDisplay();
+        }
+    
+        // Function to update the cart display
+        function updateCartDisplay() {
+            var cartItemsContainer = document.getElementById("cart-items");
+            var totalSpan = document.getElementById("total");
+    
+            // Clear previous cart items
+            cartItemsContainer.innerHTML = "";
+    
+            // Update cart items and calculate total
+            var total = 0;
+    
+            shoppingCart.forEach(item => {
+                var cartItem = document.createElement("li");
+                cartItem.textContent = `${item.name} - $${item.price.toFixed(2)}`;
+                cartItemsContainer.appendChild(cartItem);
+    
+                total += item.price;
+            });
+    
+            // Update total in the cart
+            totalSpan.textContent = total.toFixed(2);
+        }
+    
+        // Function to handle the checkout button click
+        function checkout() {
+            // Toggle the visibility of the checkout section
+            var checkoutSection = document.getElementById("checkout");
+            checkoutSection.style.display = "checkout-container";
+        }
+    </script>
+
+    <script>
+        // Array to store user reviews
+        var reviews = [];
+
+        // Function to add a user review
+        function addReview() {
+            // Get the review text from the textarea
+            var reviewText = document.getElementById("reviewText").value;
+
+            // Validate that the review text is not empty
+            if (!reviewText.trim()) {
+                alert("Please enter a valid review.");
+                return;
+            }
+
+            // Create a new review object with the review text and current date
+            var newReview = {
+                text: reviewText,
+                date: new Date().toLocaleDateString()
+            };
+
+            // Add the new review to the reviews array
+            reviews.push(newReview);
+
+            // Update the user reviews display
+            updateReviewsDisplay();
+
+            // Clear the textarea
+            document.getElementById("reviewText").value = "";
+        }
+
+        // Function to update the user reviews display
+        function updateReviewsDisplay() {
+            var userReviewsContainer = document.getElementById("user-reviews");
+
+            // Clear previous reviews
+            userReviewsContainer.innerHTML = "";
+
+            // Display each user review
+            reviews.forEach(function (review) {
+                var reviewElement = document.createElement("div");
+                reviewElement.innerHTML = `
+                    <p><strong>${review.date}</strong></p>
+                    <p>${review.text}</p>
+                    <hr>
+                `;
+                userReviewsContainer.appendChild(reviewElement);
+            });
+        }
+    </script>
+
+
+    
+</script>
+
+
+    <footer>
+        <p>&copy; 2023 Electrogadgets. All rights reserved.</p>
+    </footer>
+
+
+
+ 
+
+    
+    
+   
+
+
+
+
+
+<script src="script.js"></script>
+    
+    
+    
+
+
+    
+</body>
+
+</html>
